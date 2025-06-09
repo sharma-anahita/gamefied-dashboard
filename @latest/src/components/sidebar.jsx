@@ -46,7 +46,7 @@ function Sidebar() {
     <div className="sidebar">
       <h2 className="logo">My Journey</h2>
       <nav>
-        <ul>
+        <ul className='list-links'>
           {menuItems.map((item) => (
             <li key={item.path}>
               <div className={`links-sidebar ${location.pathname === item.path ? 'active' : ''}`}>

@@ -16,7 +16,7 @@ html, body {
   color: gray;
   
 }
-/* Dashboard container wraps everything - CRITICAL FIX */
+
 .dashboard-container {
   height: 100vh;
   width: 100vw;
@@ -28,7 +28,7 @@ html, body {
   padding: 0;
 }
 
-/* Dashboard layout manages sidebar + main content - CRITICAL FIX */
+
 .dashboard-layout {
   display: flex;
   gap: 0; /* Make sure this is 0 */
@@ -39,7 +39,7 @@ html, body {
   padding: 0;
 }
 
-/* Main content section - CRITICAL FIXES */
+
 .dashboard-content {
   flex: 1;
   padding: 1rem;
@@ -130,3 +130,16 @@ html, body {
   flex-direction: column;
   padding: 20px 10px;
 }
+
+@media (max-width: 768px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+
+  .dashboard-content {
+    margin-left: 0;
+    width: 100vw;
+    padding: 0.5rem;
+  }
+}
+

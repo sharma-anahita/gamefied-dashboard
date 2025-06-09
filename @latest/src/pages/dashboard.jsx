@@ -6,9 +6,11 @@ import Xp from '../components/xp.jsx';
 import ProgressBar from '../components/progressBar.jsx';
 import streakimg from '../assets/streak-icon.webp'
 import Mood from '../components/Mood.jsx';
-import levelimg from '../assets/level.png'
+import levelimg from '../assets/level.png';
+import { useState, useEffect } from 'react';
 function Dashboard() {
   const username = JSON.parse(localStorage.getItem('username'));
+  const [user, setUser] = useState(MOCK_USER);
 
   return (
     <div className="dashboard-container">
@@ -33,12 +35,12 @@ function Dashboard() {
           </header>
           <div className="dashboard">
             <div className='xp-related-info'>
-               <Xp />
-                <ProgressBar/>
+               <Xp user={user} />
+                <ProgressBar user={user}/>
             </div>
             <p className='last-action'><i>Last login : {MOCK_USER.lastAction}</i></p>
             <div className='mood-realted-info'>
-              < Mood/>
+              < Mood user={user} setUser={setUser}/>
             </div>
           </div>
         </div>

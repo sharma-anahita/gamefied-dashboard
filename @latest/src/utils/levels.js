@@ -1,12 +1,13 @@
 
 
 function XPLevels(levels = 100, baseXP = 100) {
-  const xpLevels = {};
+  const xpLevels = [];
+
   let totalXP = 0;
 
   for (let level = 1; level <= levels; level++) {
     const xpToNext = baseXP * level; // exponential-like growth
-    xpLevels[level] = totalXP;
+    xpLevels.push(totalXP);
     totalXP += xpToNext;
   }
 

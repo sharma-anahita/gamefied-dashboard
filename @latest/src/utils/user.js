@@ -1,9 +1,9 @@
 
-const MOCK_USER = {
+let MOCK_USER = {
   username: "admin",
   password:"123456",
-  xp: 220,
-  level: 3,
+  xp: 520,
+  level: 4,
   streak: 5,
   lastAction: "2025-06-09T06:10:00.123Z"
 }

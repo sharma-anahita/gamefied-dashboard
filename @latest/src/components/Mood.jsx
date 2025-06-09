@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import '../styles/mood.css'
-
+import getRewardMessage from '../utils/reward.js'
+import RewardMessage from './Rewardmessage.jsx'
+import {calculateXPFromChars,calculateLevel,getXPForCurrentLevel} from '../utils/xpManagement.js'
+import MOCK_USER from '../utils/user.js';
 
 const moods = [
     { emoji: '😊', label: 'Happy' },
@@ -14,11 +17,15 @@ const moods = [
   ];
 
 
-function Mood(){
+function Mood({user,setUser}){
     const [text,changeText] = useState(''); 
     const [date,changeDate] = useState('');
     const [choosenMood,changechoosenMood] = useState('');
     const [showEntry,setshowEntry] = useState(false);
+    const [showReward, setShowReward] = useState(false);
+    const [rewardMessage, setRewardMessage] = useState('');
+
+
     function handleChange(e){
         changeText(e.target.value);
 
@@ -28,19 +35,89 @@ function Mood(){
         changechoosenMood(mood.label);
         setshowEntry(true );
     }
-    function handleSave(){
-        if(text.trimEnd()=='') return;
-        const entry = {entry : text,
-                        date : new Date()}
-        //save to storage
-        localStorage.setItem('journal',JSON.stringify(entry));
-        //
-        setshowEntry(false);
-        setTimeout(()=>changeText(''),200);
+    function handleSave() {
+    if (text.trim() === '') return;
+    
+    const trimmedText = text.trim();
+    const charCount = trimmedText.length;
+    const message = getRewardMessage(charCount);
+
+    setRewardMessage(message);
+    setShowReward(true);
+
+    const entry = {
+        entry: trimmedText,
+        date: new Date(),
+        mood: choosenMood
+    };
+
+    localStorage.setItem('journal', JSON.stringify(entry));
+
+    let addedXp = calculateXPFromChars(charCount);
+    const finalXp = user.xp + addedXp;
+    const newLevel = calculateLevel(finalXp);
+
+    setshowEntry(false);
+    setTimeout(() => changeText(''), 200);
+    
+    // Update user with new total XP and level
+    setUser({
+        ...user,
+        xp: finalXp,  // Keep total accumulated XP
+        level: newLevel
+    });
+}
+
+// Alternative approach if you want to reset XP within level:
+function handleSaveWithLevelReset() {
+    if (text.trim() === '') return;
+    
+    const trimmedText = text.trim();
+    const charCount = trimmedText.length;
+    const message = getRewardMessage(charCount);
+
+    setRewardMessage(message);
+    setShowReward(true);
+
+    const entry = {
+        entry: trimmedText,
+        date: new Date(),
+        mood: choosenMood
+    };
+
+    localStorage.setItem('journal', JSON.stringify(entry));
+
+    let addedXp = calculateXPFromChars(charCount);
+    const finalXp = user.xp + addedXp;
+    const newLevel = calculateLevel(finalXp);
+    
+    // If level changed, reset XP to show progress within new level
+    let adjustedXp = finalXp;
+    if (newLevel > user.level) {
+        const currentLevelXP = newLevel > 1 ? (xpTable[newLevel - 2] || 0) : 0;
+        adjustedXp = finalXp - currentLevelXP; // XP within the current level
     }
+
+    setshowEntry(false);
+    setTimeout(() => changeText(''), 200);
+    
+    setUser({
+        ...user,
+        xp: adjustedXp,  // Adjusted XP for new level
+        level: newLevel,
+        totalXP: finalXp  // Keep track of total XP separately if needed
+    });
+}
+
+
+
+    const handleCloseReward = () => {
+        setShowReward(false);
+    };
     return(
          
         <div className={`mood-tracker`}>
+            <RewardMessage show={showReward} message={rewardMessage} onClose={handleCloseReward}/>
             <div className='mood-grid'>
                 {moods.map((mood, index) => (
                     <button

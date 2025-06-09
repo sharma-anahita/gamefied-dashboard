@@ -146,27 +146,34 @@
   background-color: #0E0035;
 }
 
-/* Responsive Design */
+/* Responsive Design */ 
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
     height: auto;
-    position: relative;
+    position: relative; /* Override fixed positioning */
     padding: 1rem 0;
+    z-index: auto;
   }
-  
-  .dashboard-content {
-    margin-left: 0;
-    width: 100vw;
-  }
-  
-  .links-sidebar {
-    padding: 0.75rem 1rem;
-    margin: 0.25rem 0.5rem;
-  }
-  
+
   .sidebar h2.logo {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
+
+  .links-sidebar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: flex-start;
+    padding: 0.75rem 1rem;
+    margin: 0.25rem 0.5rem;
+  }
+
+  .list-links {
+    display: grid;    
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+   
 }

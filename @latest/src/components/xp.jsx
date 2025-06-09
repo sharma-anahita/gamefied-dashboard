@@ -1,17 +1,19 @@
 import '../styles/dashboard.css';
-import MOCK_USER from '../utils/user.js'
-import xpTable from '../utils/levels.js'
 import '../styles/xp.css';
+import xpTable from '../utils/levels.js';
 
-const maxXp = xpTable[MOCK_USER.level];
+function Xp({ user }) {
+    // Fix: Use consistent indexing - if user.level is 1-based, use level-1 for array access
+    const currentLevelXP = user.level > 1 ? (xpTable[user.level - 2] || 0) : 0;
+    const nextLevelXP = xpTable[user.level - 1] || (xpTable[xpTable.length - 1] + 1000);
 
-function Xp() {
-    const fillPercentage = Math.min((MOCK_USER.xp / maxXp) * 100, 100);
+    const xpInLevel = user.xp - currentLevelXP;
+    const xpNeeded = nextLevelXP - currentLevelXP;
 
     return (
         <div className="xp-bar-container">
-            <p className="xp-title">Experience Level:  </p>
-            <span className="xp-text">{MOCK_USER.xp} / {maxXp} XP</span>
+            <p className="xp-title">Experience Level: {user.level}</p>
+            <span className="xp-text">{xpInLevel} / {xpNeeded} XP to next level</span>
         </div>
     );
 }
