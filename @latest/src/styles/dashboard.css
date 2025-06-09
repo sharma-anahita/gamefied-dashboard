@@ -10,8 +10,12 @@ html, body {
   width: 100vw;
   background-color: #0E0035;
   overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
+.last-action{
+  color: gray;
+  
+}
 /* Dashboard container wraps everything - CRITICAL FIX */
 .dashboard-container {
   height: 100vh;
@@ -49,16 +53,80 @@ html, body {
 }
 
 .name-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top:15px ;
+  font-size: 1.75rem;
   padding: 0.5rem 1rem;
-  font-weight: bold;
-  font-size: 1.2rem;
+  font-weight: bold; 
   margin: 0; /* Remove any margins */
+  margin-bottom: 1.5rem;
   background-color: transparent;
+  
+}
+.welcome-msg{
+  color: #00c3ff; 
+  text-shadow: 0 0 20px rgba(0, 195, 255, 0.5);
+}
+.welcome-msg {
+  color: #00c3ff;
+  text-shadow: 0 0 20px rgba(0, 195, 255, 0.5);
+  animation: glowColor 4s infinite alternate ease-in-out;
+  
 }
 
-.dashboard {
+@keyframes glowColor {
+  0% {
+    
+    color: #00c3ff;
+    text-shadow: 0 0 20px rgba(0, 195, 255, 0.5);
+  }
+  100% {
+    color: #7700ff;
+    text-shadow: 0 0 20px rgba(130, 21, 208, 0.5);
+  }
+}
+
+.xp {
   padding: 0.5rem 1rem;
   margin: 0; /* Remove any margins */
   background-color: transparent;
 }
- 
+.level{
+  height: 2rem;
+}
+.for-flex{
+  display: flex;
+  flex-direction: row;
+  height: 2rem;
+  gap: 8px;
+}
+.icons {
+  display: flex;
+  flex-direction: row;
+   gap: 15px;
+}
+
+.dashboard{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.xp-related-info{
+  border: 1px solid hsl(194, 100%, 50%);
+  border-radius: 10px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  padding: 20px 10px;
+}
+.mood-realted-info{
+  border: 1px solid #a251ff;;
+  border-radius: 10px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  padding: 20px 10px;
+}

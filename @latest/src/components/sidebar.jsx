@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import '../styles/sidebar.css';
 import img1 from '../assets/friends-8.png';
 import storeimg from "../assets/online-store.png";
-import gamesimg from "../assets/games.png";
+import goalsimg from "../assets/goals.png";
 import paymentimg from "../assets/payment.png";
 import dashboardimg from "../assets/dashboard.png";
 
@@ -17,9 +17,9 @@ function Sidebar() {
       alt: "Dashboard icon"
     },
     {
-      path: "/GamesList",
-      label: "Games List",
-      icon: gamesimg,
+      path: "/Goals ",
+      label: "Goals",
+      icon: goalsimg,
       alt: "Games icon"
     },
     {
@@ -44,7 +44,7 @@ function Sidebar() {
 
   return (
     <div className="sidebar">
-      <h2 className="logo">GamePanel</h2>
+      <h2 className="logo">My Journey</h2>
       <nav>
         <ul>
           {menuItems.map((item) => (

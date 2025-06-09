@@ -43,7 +43,7 @@ html, body {
 }
 
 .login-div {
-  border: 1px solid white;
+  border: 1px solid #00c3ff;
   padding: 80px;
   margin: 10px;
   width: 100%;
@@ -57,7 +57,8 @@ html, body {
   background-color: #1A0C3E;
   font-family: 'Bebas Neue', sans-serif;
   font-size: 2rem;
-  color: white;
+  text-shadow: 0 0 20px rgba(0, 195, 255, 0.5);
+  color: #00c3ff;
 }
 
 
@@ -65,10 +66,15 @@ input{
     border: none;
     font-size: 24px;
     margin: 5px;
-    color:white;
+    background-color: transparent;
+     text-shadow: 0 0 20px rgba(0, 195, 255, 0.5);
+    color: #00c3ff;
 }
 .login-button{
     background-color: #190C3D;
+    border-radius: 15px;
+    border: 1px solid black;
+    cursor: pointer;
     color: white;
     font-size: 1.5rem;
     padding: 10px;
