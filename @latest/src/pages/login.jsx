@@ -1,19 +1,28 @@
-import './styles/Login.css'
-
+import '../styles/Login.css'
+import { useNavigate } from 'react-router-dom';
 import { React, useState } from 'react';
+import MOCK_USER from '../utils/user.js';
+
+
 export function Login(){
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
-
-   const handleLogin = () => {
-        console.log("Username:", username);
-        console.log("Password:", password);
-        // You can add form validation or API calls here
+    const navigate = useNavigate();
+    
+    const handleLogin = () => {
+        if (username === MOCK_USER.username && password === MOCK_USER.password) {
+            localStorage.setItem('username', JSON.stringify(username));
+            navigate('/dash');
+        } else {
+            alert("Invalid credentials");
+        }
     };
 
 
+
     return(
-        <div className="container">
+        // <div className='login-container'>
+            <div className="container">
             <div className="login-div">
                 Sign-In
                 <div>
@@ -26,7 +35,8 @@ export function Login(){
                 </div>
                 <button className='login-button' onClick={handleLogin}>login</button>
             </div>
-        </div>
+            </div>
+        // </div>
     );
 }
 
