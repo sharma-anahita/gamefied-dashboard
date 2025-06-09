@@ -1,7 +1,7 @@
 // Dashboard.jsx
 import '../styles/dashboard.css';
 import Sidebar from '../components/sidebar.jsx';
-import Xp from './xp.jsx';
+import Xp from '../components/xp.jsx';
 
 function Dashboard() {
   const username = JSON.parse(localStorage.getItem('username'));
