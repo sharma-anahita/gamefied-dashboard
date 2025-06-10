@@ -3,8 +3,8 @@ import '../styles/progressBar.css';
 import xpTable from '../utils/levels.js';
 import React from 'react';
 
-function ProgressBar({ user }) {
-    // Fix: Use same logic as Xp component for consistency
+function ProgressBar({ user }) { 
+    
     const currentLevelXP = user.level > 1 ? (xpTable[user.level - 2] || 0) : 0;
     const nextLevelXP = xpTable[user.level - 1] || (xpTable[xpTable.length - 1] + 1000);
     

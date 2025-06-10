@@ -68,47 +68,6 @@ function Mood({user,setUser}){
     });
 }
 
-// Alternative approach if you want to reset XP within level:
-function handleSaveWithLevelReset() {
-    if (text.trim() === '') return;
-    
-    const trimmedText = text.trim();
-    const charCount = trimmedText.length;
-    const message = getRewardMessage(charCount);
-
-    setRewardMessage(message);
-    setShowReward(true);
-
-    const entry = {
-        entry: trimmedText,
-        date: new Date(),
-        mood: choosenMood
-    };
-
-    localStorage.setItem('journal', JSON.stringify(entry));
-
-    let addedXp = calculateXPFromChars(charCount);
-    const finalXp = user.xp + addedXp;
-    const newLevel = calculateLevel(finalXp);
-    
-    // If level changed, reset XP to show progress within new level
-    let adjustedXp = finalXp;
-    if (newLevel > user.level) {
-        const currentLevelXP = newLevel > 1 ? (xpTable[newLevel - 2] || 0) : 0;
-        adjustedXp = finalXp - currentLevelXP; // XP within the current level
-    }
-
-    setshowEntry(false);
-    setTimeout(() => changeText(''), 200);
-    
-    setUser({
-        ...user,
-        xp: adjustedXp,  // Adjusted XP for new level
-        level: newLevel,
-        totalXP: finalXp  // Keep track of total XP separately if needed
-    });
-}
-
 
 
     const handleCloseReward = () => {

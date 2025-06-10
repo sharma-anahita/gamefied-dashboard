@@ -3,7 +3,7 @@ import '../styles/xp.css';
 import xpTable from '../utils/levels.js';
 
 function Xp({ user }) {
-    // Fix: Use consistent indexing - if user.level is 1-based, use level-1 for array access
+    
     const currentLevelXP = user.level > 1 ? (xpTable[user.level - 2] || 0) : 0;
     const nextLevelXP = xpTable[user.level - 1] || (xpTable[xpTable.length - 1] + 1000);
 

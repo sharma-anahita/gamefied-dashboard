@@ -1,4 +1,4 @@
-// Dashboard.jsx
+ 
 import '../styles/dashboard.css';
 import MOCK_USER from '../utils/user.js'
 import Sidebar from '../components/sidebar.jsx';

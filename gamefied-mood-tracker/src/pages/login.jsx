@@ -22,8 +22,7 @@ export function Login(){
 
 
 
-    return(
-        // <div className='login-container'>
+    return( 
             <div className="container">
             <div className="login-div">
                 Sign-In
@@ -37,8 +36,7 @@ export function Login(){
                 </div>
                 <button className='login-button' onClick={handleLogin}>login</button>
             </div>
-            </div>
-        // </div>
+            </div> 
     );
 }
 
