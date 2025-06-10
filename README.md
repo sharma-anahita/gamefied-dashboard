@@ -1,0 +1,1 @@
+This is a gamified dashboard that helps users track their mood across different days. Built using HTML, CSS, JavaScript, and React, it visualizes emotional trends and encourages self-awareness through a fun, interactive interface.
