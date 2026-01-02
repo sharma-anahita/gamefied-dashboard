@@ -1,43 +1,83 @@
-import '../styles/Login.css'
-import { useNavigate } from 'react-router-dom';
-import { React, useState } from 'react';
-import MOCK_USER from '../utils/user.js';
-import userimg from '../assets/user.png';
-import passwordimg from '../assets/password.png';
+// src/pages/Login.jsx
 
-export function Login(){
-    const [username,setUsername] = useState("");
-    const [password,setPassword] = useState("");
-    const navigate = useNavigate();
-    
-    const handleLogin = () => {
-        if (username === MOCK_USER.username && password === MOCK_USER.password) {
-            localStorage.setItem('username', JSON.stringify(username));
-            navigate('/dash');
-            MOCK_USER.lastAction =new Date().toLocaleString();
-        } else {
-            alert("Invalid credentials");
-        }
-    };
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { login } from '../api/auth.api.jsx';
+import { useUser } from '../context/UserContext.jsx';
+import '../styles/pages/Login.css';
 
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  
+  const navigate = useNavigate();
+  const { setUser } = useUser();
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
 
-    return( 
-            <div className="container">
-            <div className="login-div">
-                Sign-In
-                <div>
-                    <label htmlFor="login-username"><img src={userimg} alt=""  className='icon' /> </label>
-                    <input onChange={(e)=>setUsername(e.target.value)} type="text" id="login-username" placeholder="Enter your username"/>
-                </div>
-                <div>
-                    <label htmlFor="login-password"><img src={passwordimg} alt="" className='icon' /> </label>
-                    <input type="password" onChange={(e)=>{setPassword(e.target.value)}} id="login-password" placeholder="Enter your password"/>
-                </div>
-                <button className='login-button' onClick={handleLogin}>login</button>
-            </div>
-            </div> 
-    );
-}
+    try {
+      const data = await login(email, password);
+      setUser(data.user);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message || 'Login failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="login-container">
+      <h1 className="login-title">Login</h1>
+      
+      {error && (
+        <div className="login-error">
+          {error}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="login-form-group">
+          <label className="login-label">Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="login-input"
+          />
+        </div>
+
+        <div className="login-form-group">
+          <label className="login-label">Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="login-input"
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="login-button"
+        >
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+      </form>
+
+      <p className="login-footer">
+        Don't have an account? <Link to="/register">Register</Link>
+      </p>
+    </div>
+  );
+};
 
 export default Login;

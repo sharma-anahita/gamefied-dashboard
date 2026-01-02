@@ -1,107 +1,95 @@
+// src/components/dashboard/Mood.jsx
+
 import { useState } from 'react';
-import '../styles/mood.css'
-import getRewardMessage from '../utils/reward.js'
-import RewardMessage from './Rewardmessage.jsx'
-import {calculateXPFromChars,calculateLevel,getXPForCurrentLevel} from '../utils/xpManagement.js'
-import MOCK_USER from '../utils/user.js';
+import { addMood } from '../../api/mood.api.js';
+import '../../styles/components/Mood.css';
 
-const moods = [
-    { emoji: '😊', label: 'Happy' },
-    { emoji: '😴', label: 'Tired' },
-    { emoji: '💪', label: 'Motivated' },
-    { emoji: '😔', label: 'Sad' },
-    { emoji: '😤', label: 'Frustrated' },
-    { emoji: '🎉', label: 'Excited' },
-    { emoji: '😌', label: 'Calm' },
-    { emoji: '🤔', label: 'Thoughtful' }
-  ];
+const MOOD_OPTIONS = [
+  { value: 'very_bad', emoji: '😢', label: 'Very Bad' },
+  { value: 'bad', emoji: '😕', label: 'Bad' },
+  { value: 'neutral', emoji: '😐', label: 'Neutral' },
+  { value: 'good', emoji: '🙂', label: 'Good' },
+  { value: 'very_good', emoji: '😄', label: 'Very Good' },
+];
 
+const Mood = ({ onMoodAdded }) => {
+  const [selectedMood, setSelectedMood] = useState('');
+  const [note, setNote] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-function Mood({user,setUser}){
-    const [text,changeText] = useState(''); 
-    const [date,changeDate] = useState('');
-    const [choosenMood,changechoosenMood] = useState('');
-    const [showEntry,setshowEntry] = useState(false);
-    const [showReward, setShowReward] = useState(false);
-    const [rewardMessage, setRewardMessage] = useState('');
-
-
-    function handleChange(e){
-        changeText(e.target.value);
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!selectedMood) {
+      setError('Please select a mood');
+      return;
     }
-    
-    function handleMoodSelect(mood){
-        changechoosenMood(mood.label);
-        setshowEntry(true );
+
+    setError('');
+    setSuccess('');
+    setLoading(true);
+
+    try {
+      const response = await addMood(selectedMood, note);
+      setSuccess(`Mood logged! +${response.xp} XP, Streak: ${response.streak}`);
+      setSelectedMood('');
+      setNote('');
+      
+      // Trigger parent refetch
+      if (onMoodAdded) {
+        onMoodAdded();
+      }
+    } catch (err) {
+      setError(err.message || 'Failed to log mood');
+    } finally {
+      setLoading(false);
     }
-    function handleSave() {
-    if (text.trim() === '') return;
-    
-    const trimmedText = text.trim();
-    const charCount = trimmedText.length;
-    const message = getRewardMessage(charCount);
+  };
 
-    setRewardMessage(message);
-    setShowReward(true);
+  return (
+    <div className="mood-container">
+      <h2 className="mood-title">How are you feeling today?</h2>
 
-    const entry = {
-        entry: trimmedText,
-        date: new Date(),
-        mood: choosenMood
-    };
+      {error && <div className="mood-error">{error}</div>}
+      {success && <div className="mood-success">{success}</div>}
 
-    localStorage.setItem('journal', JSON.stringify(entry));
-
-    let addedXp = calculateXPFromChars(charCount);
-    const finalXp = user.xp + addedXp;
-    const newLevel = calculateLevel(finalXp);
-
-    setshowEntry(false);
-    setTimeout(() => changeText(''), 200);
-    
-    // Update user with new total XP and level
-    setUser({
-        ...user,
-        xp: finalXp,  // Keep total accumulated XP
-        level: newLevel
-    });
-}
-
-
-
-    const handleCloseReward = () => {
-        setShowReward(false);
-    };
-    return(
-         
-        <div className={`mood-tracker`}>
-            <RewardMessage show={showReward} message={rewardMessage} onClose={handleCloseReward}/>
-            <div className='mood-grid'>
-                {moods.map((mood, index) => (
-                    <button
-                        key={index}
-                        className={`mood-button ${choosenMood.emoji === mood.emoji ? 'selected' : ''}`}
-                        onClick={() => handleMoodSelect(mood)} >
-                        <span className="mood-emoji">{mood.emoji}</span>
-                        <span className="mood-label">{mood.label}</span>
-                    </button>
-                    ))}
+      <form onSubmit={handleSubmit}>
+        <div className="mood-selector">
+          {MOOD_OPTIONS.map((mood) => (
+            <div
+              key={mood.value}
+              className={`mood-option ${selectedMood === mood.value ? 'selected' : ''}`}
+              onClick={() => setSelectedMood(mood.value)}
+            >
+              <span className="mood-emoji">{mood.emoji}</span>
+              <span className="mood-label">{mood.label}</span>
             </div>
-                <>
-                <div className={`journal-entry ${showEntry ? 'show' : ''}`}>
-                    <h2 className='mood-title'>How are you feeling today?</h2>
-                    <textarea type="textarea"  onChange={handleChange} value={text} rows="4" cols="40" className='journal'  />
-                    <button className='save-button' onClick={()=>handleSave()}>Save</button>
-                </div>
-                </>
-                
-                
-            
-            
+          ))}
         </div>
-        
-    );
-}
+
+        <div className="mood-note-group">
+          <label className="mood-note-label">Note (optional)</label>
+          <textarea
+            className="mood-note-input"
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="What's on your mind?"
+            maxLength={500}
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="mood-submit-button"
+        >
+          {loading ? 'Logging...' : 'Log Mood'}
+        </button>
+      </form>
+    </div>
+  );
+};
 
 export default Mood;

@@ -1,50 +1,83 @@
-// Fixed Dashboard.jsx - USE user STATE instead of MOCK_USER
-import '../styles/dashboard.css';
-import MOCK_USER from '../utils/user.js'
-import Sidebar from '../components/sidebar.jsx';
-import Xp from '../components/xp.jsx';
-import ProgressBar from '../components/progressBar.jsx';
-import streakimg from '../assets/streak-icon.webp'
-import Mood from '../components/Mood.jsx';
-import levelimg from '../assets/level.png';
-import { useState, useEffect } from 'react';
+// src/pages/Dashboard.jsx
 
-function Dashboard() {
-  const username = JSON.parse(localStorage.getItem('username'));
-  const [user, setUser] = useState(MOCK_USER);
+import { useState, useEffect } from 'react';
+import { useUser } from '../context/UserContext.jsx';
+import { getProgress } from '../api/user.api.jsx';
+import Mood from '../components/dashboard/Mood.jsx';
+import ProgressBar from '../components/dashboard/ProgressBar.jsx';
+import StatsChart from '../components/dashboard/StatsChart.jsx';
+import Xp from '../components/dashboard/Xp.jsx';
+import '../styles/pages/Dashboard.css';
+
+const Dashboard = () => {
+  const { user, refetchUser } = useUser();
+  const [progress, setProgress] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProgress = async () => {
+      try {
+        const data = await getProgress();
+        setProgress(data.progressToNextLevel);
+      } catch (err) {
+        console.error('Failed to fetch progress:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProgress();
+  }, [user]);
+
+  if (loading) {
+    return <div className="dashboard-loading">Loading dashboard...</div>;
+  }
 
   return (
     <div className="dashboard-container">
-      <div className="dashboard-layout">
-        <Sidebar />
-        <div className="dashboard-content">
-          <header className="name-display">
-            <h2 className='welcome-msg'>Welcome, {username ? username : 'Guest'}!</h2>
-            <div className='icons'>
-              <div className='for-flex'>
-                <img className='level' src={levelimg} alt="" />
-                <span>{user.level}</span> {/* FIXED: Use user state */}
-              </div>
-              <div className='for-flex'>
-                <img className='level' src={streakimg} alt="" />
-                <span>{user.streak}</span> {/* FIXED: Use user state */}
-              </div>
-            </div>
-          </header>
-          <div className="dashboard">
-            <div className='xp-related-info'>
-               <Xp user={user} />
-                <ProgressBar user={user}/>
-            </div>
-            <p className='last-action'><i>Last login : {user.lastAction}</i></p> {/* FIXED: Use user state */}
-            <div className='mood-realted-info'>
-              <Mood user={user} setUser={setUser}/>
-            </div>
-          </div>
+      <h1 className="dashboard-title">Dashboard</h1>
+
+      {/* User Stats Section */}
+      <div className="dashboard-stats-grid">
+        <div className="dashboard-stat-card">
+          <h3 className="dashboard-stat-title">Level</h3>
+          <p className="dashboard-stat-value">{user.level}</p>
         </div>
+
+        <div className="dashboard-stat-card">
+          <h3 className="dashboard-stat-title">Coins</h3>
+          <p className="dashboard-stat-value">{user.coins}</p>
+        </div>
+
+        <div className="dashboard-stat-card">
+          <h3 className="dashboard-stat-title">Streak</h3>
+          <p className="dashboard-stat-value">{user.streak} 🔥</p>
+        </div>
+      </div>
+
+      {/* XP and Progress */}
+      <div className="dashboard-xp-section">
+        <Xp xp={user.xp} level={user.level} />
+        {progress && (
+          <ProgressBar 
+            current={progress.current} 
+            needed={progress.needed} 
+            percentage={progress.percentage} 
+          />
+        )}
+      </div>
+
+      {/* Mood Section */}
+      <div className="dashboard-mood-section">
+        <Mood onMoodAdded={refetchUser} />
+      </div>
+
+      {/* Stats Chart */}
+      <div className="dashboard-chart-section">
+        <StatsChart />
       </div>
     </div>
   );
-}
+};
 
 export default Dashboard;
