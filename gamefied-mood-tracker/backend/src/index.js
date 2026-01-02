@@ -4,6 +4,12 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
+import moodRoutes from './routes/moodRoutes.js';
+import goalRoutes from './routes/goalRoutes.js';
+import storeRoutes from './routes/storeRoutes.js';
+import achievementRoutes from './routes/achievementRoutes.js';
+import statsRoutes from './routes/statsRoutes.js';
+import errorHandler from './middleware/errorMiddleware.js';
 
 // Load environment variables
 dotenv.config();
@@ -42,13 +48,13 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// API Routes
+// API Routes (clean registration)
 app.use('/api/auth', authRoutes);
-// app.use('/api/moods', moodRoutes);
-// app.use('/api/goals', goalRoutes);
-// app.use('/api/store', storeRoutes);
-// app.use('/api/achievements', achievementRoutes);
-// app.use('/api/stats', statsRoutes);
+app.use('/api/moods', moodRoutes);
+app.use('/api/goals', goalRoutes);
+app.use('/api/store', storeRoutes);
+app.use('/api/achievements', achievementRoutes);
+app.use('/api/stats', statsRoutes);
 
 // 404 Handler
 app.use((req, res, next) => {
@@ -58,16 +64,8 @@ app.use((req, res, next) => {
   });
 });
 
-// Global Error Handler
-app.use((err, req, res, next) => {
-  console.error('Error:', err.stack);
-  
-  res.status(err.statusCode || 500).json({
-    success: false,
-    message: err.message || 'Internal Server Error',
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
-  });
-});
+// Centralized Error Handler (should be last)
+app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 5000;

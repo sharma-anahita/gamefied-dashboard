@@ -2,7 +2,7 @@
 // lastDate: Date string (ISO format) of last mood entry
 // currentDate: Date string (ISO format) of current mood entry
 // currentStreak: integer value of current streak
-function updateStreak(lastDate, currentDate, currentStreak) {
+export function updateStreak(lastDate, currentDate, currentStreak) {
 	const last = new Date(lastDate);
 	const current = new Date(currentDate);
 	// Calculate difference in days
@@ -20,6 +20,3 @@ function updateStreak(lastDate, currentDate, currentStreak) {
 	}
 }
 
-module.exports = {
-	updateStreak
-};
