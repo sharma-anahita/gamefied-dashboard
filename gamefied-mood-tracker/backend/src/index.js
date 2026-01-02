@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -41,8 +42,8 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// API Routes (will be added)
-// app.use('/api/auth', authRoutes);
+// API Routes
+app.use('/api/auth', authRoutes);
 // app.use('/api/moods', moodRoutes);
 // app.use('/api/goals', goalRoutes);
 // app.use('/api/store', storeRoutes);
