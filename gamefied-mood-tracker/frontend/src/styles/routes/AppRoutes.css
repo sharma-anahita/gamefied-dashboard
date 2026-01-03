@@ -1,0 +1,9 @@
+.app-loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2rem;
+  color: var(--primary-color, #2d3748);
+  background: #f3f4f6;
+}

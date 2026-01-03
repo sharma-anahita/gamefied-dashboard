@@ -1,0 +1,119 @@
+/* CSS RESET */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1.5;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: #f7f9fb;
+  color: #222b3a;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* COLOR VARIABLES */
+:root {
+  --color-bg: #f7f9fb;
+  --color-text: #222b3a;
+  --color-primary: #64b5f6;
+  --color-primary-dark: #1976d2;
+  --color-accent: #fbc02d;
+  --color-success: #388e3c;
+  --color-danger: #b71c1c;
+  --color-border: #e0e0e0;
+  --color-muted: #b0bec5;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.5em;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+/* SPACING UTILITIES */
+.m-0 { margin: 0 !important; }
+.mt-1 { margin-top: 8px !important; }
+.mt-2 { margin-top: 16px !important; }
+.mt-3 { margin-top: 24px !important; }
+.mb-1 { margin-bottom: 8px !important; }
+.mb-2 { margin-bottom: 16px !important; }
+.mb-3 { margin-bottom: 24px !important; }
+.mx-auto { margin-left: auto !important; margin-right: auto !important; }
+.p-0 { padding: 0 !important; }
+.p-1 { padding: 8px !important; }
+.p-2 { padding: 16px !important; }
+.p-3 { padding: 24px !important; }
+
+/* LAYOUT */
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.page-content {
+  flex: 1;
+  margin-left: 210px; /* for sidebar */
+  padding: 32px 24px 24px 24px;
+}
+
+@media (max-width: 700px) {
+  .app-layout {
+    flex-direction: column;
+  }
+  .page-content {
+    margin-left: 0;
+    padding: 16px 4vw;
+  }
+}

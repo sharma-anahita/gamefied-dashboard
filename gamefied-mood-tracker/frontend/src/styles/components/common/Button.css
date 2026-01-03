@@ -1,0 +1,23 @@
+.ui-btn {
+  background: #64b5f6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 22px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s;
+  outline: none;
+  margin: 0;
+  display: inline-block;
+}
+
+.ui-btn:disabled {
+  background: #b0bec5;
+  cursor: not-allowed;
+}
+
+.ui-btn:hover:not(:disabled) {
+  background: #1976d2;
+}

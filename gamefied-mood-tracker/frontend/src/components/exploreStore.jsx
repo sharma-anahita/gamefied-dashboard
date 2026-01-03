@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../styles/dashboard.css';
+import '../styles/components/exploreStore.css';
 
 const STORE_ITEMS = [
   { id: 1, name: 'Premium Theme', price: 500, type: 'theme', description: 'Dark cosmic theme with animations', icon: '🎨' },
@@ -35,96 +35,38 @@ function ExploreStore() {
         <div className="dashboard-content">
           <header className="name-display">
             <h2 className='welcome-msg'>Explore Store</h2>
-            <div className="coins-display" style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              fontSize: '1.2rem'
-            }}>
+            <div className="coins-display">
               <span>💰</span>
               <span>{userCoins} coins</span>
             </div>
           </header>
 
-          <div className="store-categories" style={{
-            display: 'flex',
-            gap: '10px',
-            marginBottom: '20px',
-            flexWrap: 'wrap'
-          }}>
+          <div className="store-categories">
             {categories.map(category => (
               <button
                 key={category}
+                className={`store-category-btn${selectedCategory === category ? ' selected' : ''}`}
                 onClick={() => setSelectedCategory(category)}
-                style={{
-                  padding: '8px 16px',
-                  borderRadius: '20px',
-                  border: selectedCategory === category ? '2px solid #00c3ff' : '1px solid #555',
-                  backgroundColor: selectedCategory === category ? '#00c3ff20' : '#1a1a2e',
-                  color: selectedCategory === category ? '#00c3ff' : 'white',
-                  cursor: 'pointer',
-                  textTransform: 'capitalize'
-                }}
               >
                 {category}
               </button>
             ))}
           </div>
 
-          <div className="store-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-            gap: '20px'
-          }}>
+          <div className="store-grid">
             {filteredItems.map(item => (
-              <div key={item.id} className="store-item" style={{
-                padding: '20px',
-                backgroundColor: '#16213e',
-                borderRadius: '12px',
-                border: '1px solid #00c3ff',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '10px'
-              }}>
-                <div className="item-header" style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px'
-                }}>
-                  <span style={{ fontSize: '2rem' }}>{item.icon}</span>
-                  <h3 style={{ color: 'white', margin: 0 }}>{item.name}</h3>
+              <div key={item.id} className="store-item">
+                <div className="item-header">
+                  <span className="item-icon">{item.icon}</span>
+                  <h3 className="item-title">{item.name}</h3>
                 </div>
-                
-                <p style={{ color: '#ccc', margin: 0, fontSize: '0.9rem' }}>
-                  {item.description}
-                </p>
-                
-                <div className="item-footer" style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginTop: 'auto'
-                }}>
-                  <span style={{ 
-                    color: '#ffaa00', 
-                    fontWeight: 'bold',
-                    fontSize: '1.1rem'
-                  }}>
-                    💰 {item.price}
-                  </span>
-                  
+                <p className="item-description">{item.description}</p>
+                <div className="item-footer">
+                  <span className="item-price">💰 {item.price}</span>
                   <button
+                    className="item-buy-btn"
                     onClick={() => handlePurchase(item)}
                     disabled={userCoins < item.price}
-                    style={{
-                      padding: '8px 16px',
-                      borderRadius: '6px',
-                      border: 'none',
-                      backgroundColor: userCoins >= item.price ? '#00c3ff' : '#555',
-                      color: 'white',
-                      cursor: userCoins >= item.price ? 'pointer' : 'not-allowed',
-                      opacity: userCoins >= item.price ? 1 : 0.6
-                    }}
                   >
                     {userCoins >= item.price ? 'Buy' : 'Too Expensive'}
                   </button>

@@ -1,0 +1,65 @@
+.reward-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.reward-modal-container {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  padding: 32px 28px 24px 28px;
+  min-width: 320px;
+  max-width: 90vw;
+  text-align: center;
+  position: relative;
+  animation: reward-pop 0.25s cubic-bezier(.4,2,.6,1) 1;
+}
+
+@keyframes reward-pop {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.reward-modal-header h3 {
+  margin: 0 0 12px 0;
+  color: #388e3c;
+  font-size: 1.5em;
+}
+
+.reward-modal-name {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 8px;
+}
+
+.reward-modal-desc {
+  color: #616161;
+  margin-bottom: 12px;
+}
+
+.reward-modal-xp {
+  color: #fbc02d;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+
+.reward-modal-close {
+  background: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+.reward-modal-close:hover {
+  background: #2e7031;
+}

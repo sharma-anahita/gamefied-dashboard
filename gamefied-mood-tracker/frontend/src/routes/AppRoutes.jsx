@@ -9,18 +9,14 @@ import Goals from '../pages/Goals.jsx';
 import ExploreStore from '../pages/ExploreStore.jsx';
 import Achievements from '../pages/Achievements.jsx';
 import NotFound from '../pages/NotFound.jsx';
+import '../styles/routes/AppRoutes.css';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useUser();
 
   if (loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh' 
-      }}>
+      <div className="app-loading-container">
         Loading...
       </div>
     );
@@ -34,12 +30,7 @@ const PublicRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh' 
-      }}>
+      <div className="app-loading-container">
         Loading...
       </div>
     );

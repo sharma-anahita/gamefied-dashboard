@@ -1,0 +1,40 @@
+.ui-modal__overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.ui-modal__container {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  padding: 28px 24px 20px 24px;
+  min-width: 320px;
+  max-width: 95vw;
+  position: relative;
+  text-align: left;
+}
+
+.ui-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.18s;
+}
+
+.ui-modal__close:hover {
+  color: #222;
+}
+
+.ui-modal__content {
+  margin-top: 8px;
+}

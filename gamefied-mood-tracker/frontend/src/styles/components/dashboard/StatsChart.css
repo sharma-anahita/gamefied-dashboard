@@ -1,0 +1,55 @@
+.stats-chart {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 24px 28px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.stats-chart__xp {
+  margin-bottom: 16px;
+  font-size: 1.08em;
+}
+
+.stats-chart__mood-label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.stats-chart__mood-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.stats-chart__mood {
+  text-align: center;
+  min-width: 48px;
+}
+
+.stats-chart__mood-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 4px auto;
+  font-size: 1.1em;
+}
+
+.stats-chart__mood-label-text {
+  font-size: 12px;
+}
+
+.stats-chart__mood-count {
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.stats-chart__error {
+  color: var(--color-danger);
+  margin-bottom: 12px;
+}

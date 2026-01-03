@@ -1,5 +1,5 @@
 import '../styles/dashboard.css';
-import '../styles/xp.css';
+import '../styles/components/dashboard/xp.css';
 import xpTable from '../utils/levels.js';
 
 function Xp({ user }) {

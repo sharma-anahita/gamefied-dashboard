@@ -1,0 +1,50 @@
+.payments-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.coin-balance {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.coin-amount {
+  color: #fbc02d;
+  font-weight: bold;
+}
+
+.payments-loading,
+.payments-error {
+  color: #b71c1c;
+  margin-bottom: 16px;
+}
+
+.payments-list {
+  list-style: none;
+  padding: 0;
+}
+
+.payments-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background: #fafafa;
+}
+
+.payments-item-name {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.payments-item-type,
+.payments-item-price,
+.payments-item-date {
+  font-size: 0.95em;
+  color: #616161;
+  margin-top: 4px;
+}

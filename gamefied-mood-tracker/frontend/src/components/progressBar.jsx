@@ -18,7 +18,10 @@ function ProgressBar({ user }) {
         <div className='progress-bar'>
             <div className='progress-text'>XP progress till next level:</div>
             <div className="progress-bar-container">
-                <div className="progress-bar-fill" style={{ width: `${fillPercentage}%` }}></div>
+                                <div
+                                    className="progress-bar-fill"
+                                    style={{ width: `${fillPercentage}%` }}
+                                ></div>
                 <span className="progress-bar-text">{xpInLevel} / {xpNeededForLevel} XP</span>
             </div>
             <div className='progress-percent'>{fillPercentage.toFixed(0)}%</div>
