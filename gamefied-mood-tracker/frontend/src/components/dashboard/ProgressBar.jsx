@@ -1,6 +1,6 @@
 // src/components/dashboard/ProgressBar.jsx
 
-import '../../styles/components/ProgressBar.css';
+import '../../styles/components/dashboard/ProgressBar.css';
 
 const ProgressBar = ({ current, needed, percentage }) => {
   return (

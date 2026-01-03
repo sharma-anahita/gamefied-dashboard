@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { UserContext } from '../utils/user';
+import { UserContext } from '../context/UserContext.jsx';
 import '../styles/pages/ExploreStore.css';
 
 const ExploreStore = () => {

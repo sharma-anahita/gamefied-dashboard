@@ -1,0 +1,134 @@
+
+/* Pastel mood tracker aesthetic */
+
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(120deg, #fbeafc 0%, #f7b2ff 50%, #e3e6fd 100%);
+  font-family: 'Quicksand', 'Nunito', 'Segoe UI', Arial, sans-serif;
+}
+
+
+.register-form {
+  background: #fff0f6;
+  padding: 40px 24px 32px 24px;
+  border-radius: 22px;
+  box-shadow: 0 4px 24px rgba(180, 140, 210, 0.13);
+  max-width: 370px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  border: 1px solid #f3e8ff;
+  font-family: inherit;
+}
+
+
+.register-title {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #b983ff;
+  margin-bottom: 10px;
+  text-align: center;
+  letter-spacing: 0.5px;
+  font-family: 'Nunito', 'Quicksand', Arial, sans-serif;
+}
+
+
+.register-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+
+.register-field label {
+  font-size: 1.08rem;
+  color: #a78bfa;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  font-family: 'Quicksand', 'Nunito', Arial, sans-serif;
+}
+
+
+.register-field input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1.5px solid #e9d5ff;
+  font-size: 1.04rem;
+  background: #f7f0fa;
+  color: #7c3aed;
+  outline: none;
+  transition: border 0.22s, box-shadow 0.22s, background 0.22s;
+  box-shadow: 0 1px 4px rgba(180, 140, 210, 0.07);
+  font-family: inherit;
+}
+
+.register-field input:focus {
+  border-color: #b983ff;
+  box-shadow: 0 2px 12px rgba(180, 140, 210, 0.18);
+  background: #fbeafc;
+}
+
+.register-helper {
+  font-size: 0.92rem;
+  color: #b983ff;
+  margin-top: 2px;
+  margin-left: 2px;
+  font-family: 'Quicksand', 'Nunito', Arial, sans-serif;
+  opacity: 0.85;
+}
+
+
+.register-error {
+  color: #e57373;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 8px;
+  background: #fff0f0;
+  border-radius: 8px;
+  padding: 6px 0;
+  font-family: 'Quicksand', 'Nunito', Arial, sans-serif;
+}
+
+
+.register-btn {
+  padding: 13px 0;
+  font-size: 1.08rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #b983ff 0%, #f7b2ff 100%);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(180, 140, 210, 0.10);
+  transition: background 0.22s, box-shadow 0.22s;
+  font-family: 'Nunito', 'Quicksand', Arial, sans-serif;
+  letter-spacing: 0.2px;
+}
+
+.register-btn:hover,
+.register-btn:focus {
+  background: linear-gradient(90deg, #a78bfa 0%, #f7b2ff 100%);
+  box-shadow: 0 4px 16px rgba(180, 140, 210, 0.18);
+  outline: none;
+}
+
+
+@media (max-width: 500px) {
+  .register-form {
+    padding: 28px 8px 24px 8px;
+    max-width: 98vw;
+    border-radius: 16px;
+  }
+  .register-title {
+    font-size: 1.4rem;
+  }
+  .register-field input {
+    font-size: 0.98rem;
+    padding: 10px;
+  }
+}

@@ -1,0 +1,21 @@
+.friends-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.friends-page__title {
+  font-size: 2rem;
+  color: var(--primary-color, #2d3748);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.friends-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}

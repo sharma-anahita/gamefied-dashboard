@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { UserContext } from '../utils/user';
+import { UserContext } from '../context/UserContext.jsx';
 import '../styles/pages/Goals.css';
 
 const Goals = () => {
@@ -18,8 +18,12 @@ const Goals = () => {
       const res = await fetch('/api/goals', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
+      const text = await res.text();
+      if (text.startsWith('<!doctype') || text.startsWith('<html')) {
+        throw new Error('Server returned HTML instead of JSON. Check API endpoint and proxy config.');
+      }
       if (!res.ok) throw new Error('Failed to fetch goals');
-      const data = await res.json();
+      const data = JSON.parse(text);
       setGoals(data.goals || []);
     } catch (err) {
       setError(err.message);
@@ -50,6 +54,10 @@ const Goals = () => {
         },
         body: JSON.stringify(form)
       });
+      const text = await res.text();
+      if (text.startsWith('<!doctype') || text.startsWith('<html')) {
+        throw new Error('Server returned HTML instead of JSON. Check API endpoint and proxy config.');
+      }
       if (!res.ok) throw new Error('Failed to add goal');
       setForm({ title: '', description: '', deadline: '' });
       await fetchGoals();
@@ -69,6 +77,10 @@ const Goals = () => {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${token}` }
       });
+      const text = await res.text();
+      if (text.startsWith('<!doctype') || text.startsWith('<html')) {
+        throw new Error('Server returned HTML instead of JSON. Check API endpoint and proxy config.');
+      }
       if (!res.ok) throw new Error('Failed to complete goal');
       await fetchGoals();
       refreshUser();
