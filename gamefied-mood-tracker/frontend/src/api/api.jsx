@@ -1,6 +1,6 @@
-// src/api/api.js
+// frontend/src/api/api.jsx - FIXED VERSION
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 class APIError extends Error {
   constructor(message, status, data) {
@@ -18,6 +18,9 @@ const getToken = () => {
 const api = async (endpoint, options = {}) => {
   const token = getToken();
   
+  // Ensure endpoint starts with /
+  const url = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  
   const config = {
     method: options.method || 'GET',
     headers: {
@@ -34,11 +37,28 @@ const api = async (endpoint, options = {}) => {
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+    console.log(`🔄 API Request: ${config.method} ${API_BASE_URL}${url}`);
     
-    const data = await response.json();
+    const response = await fetch(`${API_BASE_URL}${url}`, config);
+    
+    // Try to parse JSON response
+    let data;
+    const contentType = response.headers.get('content-type');
+    
+    if (contentType && contentType.includes('application/json')) {
+      data = await response.json();
+    } else {
+      const text = await response.text();
+      console.error('❌ Non-JSON response:', text.substring(0, 200));
+      throw new APIError(
+        'Server returned non-JSON response',
+        response.status,
+        { text: text.substring(0, 200) }
+      );
+    }
 
     if (!response.ok) {
+      console.error(`❌ API Error: ${response.status}`, data);
       throw new APIError(
         data.message || 'Something went wrong',
         response.status,
@@ -46,13 +66,16 @@ const api = async (endpoint, options = {}) => {
       );
     }
 
+    console.log(`✅ API Success: ${config.method} ${url}`);
     return data;
+    
   } catch (error) {
     if (error instanceof APIError) {
       throw error;
     }
     
     // Network or parsing error
+    console.error('❌ Network/Parse Error:', error);
     throw new APIError(
       error.message || 'Network error',
       0,

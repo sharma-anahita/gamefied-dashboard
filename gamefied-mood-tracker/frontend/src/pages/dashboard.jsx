@@ -7,6 +7,7 @@ import Mood from '../components/dashboard/Mood.jsx';
 import ProgressBar from '../components/dashboard/ProgressBar.jsx';
 import StatsChart from '../components/dashboard/StatsChart.jsx';
 import Xp from '../components/dashboard/Xp.jsx';
+import PageLayout from '../components/layout/PageLayout.jsx';
 import '../styles/pages/Dashboard.css';
 
 const Dashboard = () => {
@@ -26,57 +27,65 @@ const Dashboard = () => {
       }
     };
 
-    fetchProgress();
+    if (user) {
+      fetchProgress();
+    }
   }, [user]);
 
   if (loading) {
-    return <div className="dashboard-loading">Loading dashboard...</div>;
+    return (
+      <PageLayout>
+        <div className="dashboard-loading">Loading dashboard...</div>
+      </PageLayout>
+    );
   }
 
   return (
-    <div className="dashboard-container">
-      <h1 className="dashboard-title">Dashboard</h1>
+    <PageLayout>
+      <div className="dashboard-container">
+        <h1 className="dashboard-title">Dashboard</h1>
 
-      {/* User Stats Section */}
-      <div className="dashboard-stats-grid">
-        <div className="dashboard-stat-card">
-          <h3 className="dashboard-stat-title">Level</h3>
-          <p className="dashboard-stat-value">{user.level}</p>
+        {/* User Stats Section */}
+        <div className="dashboard-stats-grid">
+          <div className="dashboard-stat-card">
+            <h3 className="dashboard-stat-title">Level</h3>
+            <p className="dashboard-stat-value">{user?.level || 1}</p>
+          </div>
+
+          <div className="dashboard-stat-card">
+            <h3 className="dashboard-stat-title">Coins</h3>
+            <p className="dashboard-stat-value">{user?.coins || 0}</p>
+          </div>
+
+          <div className="dashboard-stat-card">
+            <h3 className="dashboard-stat-title">Streak</h3>
+            <p className="dashboard-stat-value">{user?.streak || 0} 🔥</p>
+          </div>
         </div>
 
-        <div className="dashboard-stat-card">
-          <h3 className="dashboard-stat-title">Coins</h3>
-          <p className="dashboard-stat-value">{user.coins}</p>
+        {/* XP and Progress */}
+        <div className="dashboard-xp-section">
+          <Xp xp={user?.xp || 0} level={user?.level || 1} />
+          {progress && (
+            <ProgressBar 
+              current={progress.current} 
+              needed={progress.needed} 
+              percentage={progress.percentage} 
+            />
+          )}
         </div>
 
-        <div className="dashboard-stat-card">
-          <h3 className="dashboard-stat-title">Streak</h3>
-          <p className="dashboard-stat-value">{user.streak} 🔥</p>
+        {/* Mood Section */}
+        <div className="dashboard-mood-section">
+          <Mood onMoodAdded={refetchUser} />
+        </div>
+
+        {/* Stats Chart */}
+        <div className="dashboard-chart-section">
+          <StatsChart />
         </div>
       </div>
-
-      {/* XP and Progress */}
-      <div className="dashboard-xp-section">
-        <Xp xp={user.xp} level={user.level} />
-        {progress && (
-          <ProgressBar 
-            current={progress.current} 
-            needed={progress.needed} 
-            percentage={progress.percentage} 
-          />
-        )}
-      </div>
-
-      {/* Mood Section */}
-      <div className="dashboard-mood-section">
-        <Mood onMoodAdded={refetchUser} />
-      </div>
-
-      {/* Stats Chart */}
-      <div className="dashboard-chart-section">
-        <StatsChart />
-      </div>
-    </div>
+    </PageLayout>
   );
 };
 

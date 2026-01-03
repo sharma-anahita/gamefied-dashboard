@@ -1,3 +1,5 @@
+/* src/styles/components/layout/PageLayout.css */
+
 .page-layout {
   min-height: 100vh;
   background: #f3f4f6;
@@ -7,10 +9,16 @@
 
 .page-layout__main {
   flex: 1 1 auto;
-  max-width: 900px;
-  margin: 32px auto 0 auto;
-  padding: 24px 16px 40px 16px;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .page-layout__main {
+    padding: 0;
+  }
 }
