@@ -4,11 +4,11 @@ import { addMood } from '../../api/mood.api.jsx';
 import '../../styles/components/dashboard/Mood.css';
 
 const MOODS = [
-  { value: 'happy', emoji: '😊', label: 'Happy' },
-  { value: 'calm', emoji: '😌', label: 'Calm' },
+  { value: 'very_bad', emoji: '😢', label: 'Very Bad' },
+  { value: 'bad', emoji: '😕', label: 'Bad' },
   { value: 'neutral', emoji: '😐', label: 'Neutral' },
-  { value: 'sad', emoji: '😔', label: 'Sad' },
-  { value: 'angry', emoji: '😡', label: 'Angry' },
+  { value: 'good', emoji: '🙂', label: 'Good' },
+  { value: 'very_good', emoji: '😄', label: 'Very Good' },
 ];
 
 const Mood = () => {
@@ -28,12 +28,13 @@ const Mood = () => {
     if (!selectedMood) return;
     try {
       const res = await addMood(selectedMood, note);
-      // Update UserContext with new XP and coins
-      if (res && res.xp !== undefined && res.coins !== undefined) {
+      // Update UserContext with new XP, coins, and streak
+      if (res && res.xp !== undefined && res.coins !== undefined && res.streak !== undefined) {
         setUser(prev => ({
           ...prev,
           xp: res.xp,
           coins: res.coins,
+          streak: res.streak,
         }));
       }
       setLogged(true);

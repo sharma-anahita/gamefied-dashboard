@@ -43,14 +43,17 @@ moodSchema.index({ userId: 1, moodDate: 1 }, { unique: true });
 moodSchema.index({ userId: 1, createdAt: -1 });
 
 // Pre-save middleware to set moodDate (date only, no time)
-moodSchema.pre('save', function (next) {
+moodSchema.pre('save', function () {
   if (this.isNew || this.isModified('createdAt')) {
-    // Set moodDate to start of day (00:00:00) in UTC
     const date = this.createdAt || new Date();
-    this.moodDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    this.moodDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    );
   }
-  next();
 });
+
 
 // Virtual for mood value (numeric representation)
 moodSchema.virtual('moodValue').get(function () {
