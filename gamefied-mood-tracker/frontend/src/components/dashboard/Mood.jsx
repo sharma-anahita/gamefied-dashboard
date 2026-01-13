@@ -28,13 +28,14 @@ const Mood = () => {
     if (!selectedMood) return;
     try {
       const res = await addMood(selectedMood, note);
-      // Update UserContext with new XP, coins, and streak
-      if (res && res.xp !== undefined && res.coins !== undefined && res.streak !== undefined) {
+      // Update UserContext with new XP, coins, streak, and level
+      if (res && res.xp !== undefined && res.coins !== undefined && res.streak !== undefined && res.level !== undefined) {
         setUser(prev => ({
           ...prev,
           xp: res.xp,
           coins: res.coins,
           streak: res.streak,
+          level: res.level,
         }));
       }
       setLogged(true);

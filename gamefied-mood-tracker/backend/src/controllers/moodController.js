@@ -1,6 +1,6 @@
 import Mood from '../models/Mood.js';
 import User from '../models/User.js';
-import { calculateXP, calculateCoins } from '../utils/xpEngine.js';
+import { calculateXP, calculateCoins, handleLevelUp } from '../utils/xpEngine.js';
 import { updateStreak } from '../utils/streakEngine.js';
 
 // Add mood controller
@@ -53,6 +53,7 @@ export const addMood = async (req, res) => {
 		}
 		user.xp += xpReward;
 		user.coins += coinReward;
+		handleLevelUp(user);
 
 		await user.save();
 
@@ -61,7 +62,8 @@ export const addMood = async (req, res) => {
 			mood: newMood,
 			streak: user.streak,
 			xp: user.xp,
-			coins: user.coins
+			coins: user.coins,
+			level: user.level
 		});
 	} catch (error) {
 		console.error(error);

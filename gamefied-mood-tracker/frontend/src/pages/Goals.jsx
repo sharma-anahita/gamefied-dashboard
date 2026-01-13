@@ -3,7 +3,7 @@ import { UserContext } from '../context/UserContext.jsx';
 import '../styles/pages/Goals.css';
 
 const Goals = () => {
-  const { user, refreshUser } = useContext(UserContext);
+  const { user, refetchUser } = useContext(UserContext);
   const [goals, setGoals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -44,6 +44,17 @@ const Goals = () => {
     e.preventDefault();
     setAdding(true);
     setError(null);
+    // Validate deadline is after today
+    if (form.deadline) {
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const deadlineDate = new Date(form.deadline);
+      if (deadlineDate <= today) {
+        setError('Please select a deadline after today.');
+        setAdding(false);
+        return;
+      }
+    }
     try {
       const token = localStorage.getItem('token');
       const res = await fetch('/api/goals', {
@@ -61,7 +72,7 @@ const Goals = () => {
       if (!res.ok) throw new Error('Failed to add goal');
       setForm({ title: '', description: '', deadline: '' });
       await fetchGoals();
-      refreshUser();
+      refetchUser();
     } catch (err) {
       setError(err.message);
     } finally {
@@ -83,54 +94,57 @@ const Goals = () => {
       }
       if (!res.ok) throw new Error('Failed to complete goal');
       await fetchGoals();
-      refreshUser();
+      refetchUser();
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <div className="goals-page">
-      <h2>Goals</h2>
-      <form className="goals-form" onSubmit={handleAddGoal}>
+    <div className="goals-page" style={{ background: 'linear-gradient(135deg, #ffe0f0 0%, #ffb6e6 100%)', minHeight: '100vh', padding: '2rem' }}>
+      <h2 style={{ color: '#d72660', textShadow: '1px 1px 0 #fff' }}>Goals</h2>
+      <form className="goals-form" onSubmit={handleAddGoal} style={{ background: '#fff0fa', borderRadius: '1rem', boxShadow: '0 2px 8px #ffd6ef', padding: '1.5rem', marginBottom: '2rem', border: '2px solid #ffb6e6' }}>
         <input
           name="title"
           value={form.title}
           onChange={handleInput}
           placeholder="Goal title"
           required
+          style={{ border: '1.5px solid #ffb6e6', borderRadius: '0.5rem', marginBottom: '0.5rem', padding: '0.5rem' }}
         />
         <input
           name="description"
           value={form.description}
           onChange={handleInput}
           placeholder="Description"
+          style={{ border: '1.5px solid #ffb6e6', borderRadius: '0.5rem', marginBottom: '0.5rem', padding: '0.5rem' }}
         />
         <input
           name="deadline"
           type="date"
           value={form.deadline}
           onChange={handleInput}
+          style={{ border: '1.5px solid #ffb6e6', borderRadius: '0.5rem', marginBottom: '0.5rem', padding: '0.5rem' }}
         />
-        <button type="submit" disabled={adding}>
+        <button type="submit" disabled={adding} style={{ background: '#ffb6e6', color: '#fff', border: 'none', borderRadius: '0.5rem', padding: '0.5rem 1.5rem', fontWeight: 'bold', boxShadow: '0 1px 4px #ffd6ef', cursor: 'pointer' }}>
           {adding ? 'Adding...' : 'Add Goal'}
         </button>
       </form>
       {loading ? (
-        <div>Loading goals...</div>
+        <div style={{ color: '#d72660' }}>Loading goals...</div>
       ) : error ? (
-        <div className="goal-error">Error: {error}</div>
+        <div className="goal-error" style={{ color: '#d72660', background: '#ffe0f0', border: '1.5px solid #ffb6e6', borderRadius: '0.5rem', padding: '0.5rem', marginBottom: '1rem' }}>Error: {error}</div>
       ) : (
-        <ul className="goals-list">
+        <ul className="goals-list" style={{ listStyle: 'none', padding: 0 }}>
           {goals.map(goal => (
-            <li key={goal._id} className="goals-list-item">
-              <div className="goal-title">
-                {goal.title} {goal.completed && <span className="goal-completed">(Completed)</span>}
+            <li key={goal._id} className="goals-list-item" style={{ background: '#fff0fa', border: '1.5px solid #ffb6e6', borderRadius: '1rem', marginBottom: '1rem', padding: '1rem', boxShadow: '0 1px 4px #ffd6ef' }}>
+              <div className="goal-title" style={{ color: '#d72660', fontWeight: 'bold', fontSize: '1.1rem' }}>
+                {goal.title} {goal.completed && <span className="goal-completed" style={{ color: '#ff69b4' }}>(Completed)</span>}
               </div>
-              <div>{goal.description}</div>
-              {goal.deadline && <div>Deadline: {new Date(goal.deadline).toLocaleDateString()}</div>}
+              <div style={{ color: '#b03a7c' }}>{goal.description}</div>
+              {goal.deadline && <div style={{ color: '#b03a7c' }}>Deadline: {new Date(goal.deadline).toLocaleDateString()}</div>}
               {!goal.completed && (
-                <button className="goal-complete-btn" onClick={() => handleComplete(goal._id)}>
+                <button className="goal-complete-btn" onClick={() => handleComplete(goal._id)} style={{ background: '#ffb6e6', color: '#fff', border: 'none', borderRadius: '0.5rem', padding: '0.3rem 1rem', fontWeight: 'bold', marginTop: '0.5rem', cursor: 'pointer' }}>
                   Mark Complete
                 </button>
               )}
