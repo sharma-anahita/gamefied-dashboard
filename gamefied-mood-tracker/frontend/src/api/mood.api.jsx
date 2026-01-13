@@ -1,4 +1,6 @@
 // src/api/mood.api.js
+// Compare this frontend API with backend moodRoutes.js and moodController.js.
+// List any mismatches in routes, methods, request body, or response shape.
 
 import api from './api.jsx';
 

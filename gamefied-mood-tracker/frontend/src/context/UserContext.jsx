@@ -1,5 +1,3 @@
-// src/context/UserContext.jsx
-
 import { createContext, useContext, useState, useEffect } from 'react';
 import { getMe } from '../api/user.api.jsx';
 
@@ -12,8 +10,9 @@ export const UserProvider = ({ children }) => {
 
   const fetchUser = async () => {
     const token = localStorage.getItem('token');
-    
+
     if (!token) {
+      setUser(null);
       setLoading(false);
       return;
     }
@@ -43,7 +42,7 @@ export const UserProvider = ({ children }) => {
     loading,
     error,
     refetchUser: fetchUser,
-    isAuthenticated: !!user,
+    isAuthenticated: !!localStorage.getItem('token') && !!user,
   };
 
   return (
@@ -53,12 +52,13 @@ export const UserProvider = ({ children }) => {
   );
 };
 
+// ✅ THIS IS THE IMPORTANT PART
 export const useUser = () => {
-  const context = useContext(UserContext);
-  
+  const context = useContext(UserContext); // ✅ useContext, NOT useUser
+
   if (!context) {
-    throw new Error('useUser must be used within UserProvider');
+    throw new Error('useUser must be used within a UserProvider');
   }
-  
+
   return context;
 };

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useUser } from '../../context/UserContext.jsx';
+import { addMood } from '../../api/mood.api.jsx';
 import '../../styles/components/dashboard/Mood.css';
 
 const MOODS = [
@@ -13,18 +15,33 @@ const Mood = () => {
   const [selectedMood, setSelectedMood] = useState('');
   const [note, setNote] = useState('');
   const [logged, setLogged] = useState(false);
+  const { user, setUser } = useUser();
+
 
   const handleMoodSelect = (mood) => {
     setSelectedMood(mood);
     setLogged(false);
   };
 
-  const handleLogMood = (e) => {
+  const handleLogMood = async (e) => {
     e.preventDefault();
     if (!selectedMood) return;
-    setLogged(true);
-    // Future: send to backend
+    try {
+      const res = await addMood(selectedMood, note);
+      // Update UserContext with new XP and coins
+      if (res && res.xp !== undefined && res.coins !== undefined) {
+        setUser(prev => ({
+          ...prev,
+          xp: res.xp,
+          coins: res.coins,
+        }));
+      }
+      setLogged(true);
+    } catch (err) {
+      // handle error if needed
+    }
   };
+  
 
   return (
     <div className="mood-card">
