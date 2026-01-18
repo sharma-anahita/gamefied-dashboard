@@ -1,44 +1,90 @@
 # 🎮 Gamified Mood Tracker Dashboard
 
-A web-based, gamified dashboard that helps users track their mood daily and build positive mental health habits — built with **React**, **JavaScript**, **HTML**, and **CSS**.
+A full-stack **gamified productivity and wellness dashboard** that allows users to log daily moods, set and complete goals, earn XP and coins, track streaks, and view progress — all wrapped in a clean, scalable architecture.
+
+This project is designed with **real-world frontend–backend separation**, authentication, and extensibility in mind.
 
 ---
 
 ## 🚀 Features
 
-- 🎭 **Mood Tracking** – Select your mood daily using emoji-based options.
-- 📈 **XP System** – Earn XP for every action, track progress toward the next level.
-- 🔥 **Streak Tracker** – Stay consistent with daily check-ins and maintain streaks.
-- 🎮 **Games List** – A fun, interactive way to explore mood-boosting activities.
-- 🧠 **Reward Messages** – Motivational messages based on your mood or progress.
-- 🧾 **Payments Section (UI only)** – Example of a styled, non-functional billing tab (Placeholder).
-- 🧑‍🤝‍🧑 **Friends Tab (UI only)** – Placeholder for future social tracking features.
+### ✅ Authentication
+- User login & registration
+- JWT-based authentication
+- Protected routes for authenticated users
+- Persistent login using `/auth/me`
+
+### 😊 Mood Tracking
+- Log one mood per day
+- Mood validation and streak tracking
+- XP and coin rewards for logging moods
+- Backend-enforced daily uniqueness
+- Mood history and weekly stats support
+
+### 🎯 Goals System
+- Create goals with optional deadlines
+- Validate deadlines (future-only)
+- Mark goals as completed
+- Automatic refresh of user stats on completion
+- Backend-connected CRUD flow
+
+### 🧠 Gamification
+- XP accumulation
+- Level calculation (based on XP thresholds)
+- Coins system (used for store / rewards)
+- Streaks maintained in backend and synced to frontend
+
+### 🧭 Navigation & Layout
+- Sidebar-based navigation (Dashboard, Goals, Friends, Store, etc.)
+- Shared protected layout across all authenticated pages
+- Login/Register pages without navigation clutter
+
+### 👥 Friends (Placeholder)
+- Friends page scaffolded
+- UI ready for future backend integration
+- Empty state handling implemented
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠 Tech Stack
 
-- **Frontend**: React + Vite
-- **Styling**: Custom CSS
-- **Logic**: Pure JavaScript (No backend or database yet)
+### Frontend
+- React
+- React Router
+- Context API (UserContext)
+- Fetch API
+- CSS Modules / Custom Styling
 
- 
-## ✨ Future Improvements
+### Backend
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- JWT Authentication
 
-- 🔐 **Backend Integration**  
-  Add a backend using Node.js and Express to support user authentication, secure login, and saving mood history.
+---
 
-- 📊 **Mood Analytics**  
-  Introduce graphs and charts to display mood trends over time using libraries like Chart.js or Recharts.
+## 📁 Project Structure
 
-- 🧠 **Smart Recommendations**  
-  Suggest personalized activities or affirmations based on tracked mood patterns.
-
-- 📱 **Mobile Responsiveness**  
-  Improve layout and usability for mobile and tablet devices.
-
-- 🎯 **Achievements & Badges**  
-  Gamify the experience further with badges for mood streaks, consistency, and task completion.
-
-- 👥 **Social Features**  
-  Enable users to add friends, view shared mood updates, or participate in community challenges.
+```text
+gamefied-mood-tracker/
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   └── middleware/
+│   └── server.js
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── layouts/
+│   │   ├── pages/
+│   │   ├── api/
+│   │   ├── routes/
+│   │   └── styles/
+│   └── main.jsx
+│
+└── README.md
